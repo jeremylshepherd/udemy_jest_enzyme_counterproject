@@ -9,59 +9,59 @@ const setup = () => shallow(<App />);
 const $find = (wrapper : Enzyme.ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>, query : string) : Enzyme.ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>> => wrapper.find(query);
 
 describe("The <App /> Component renders and behaves as expected", () => {
-  const wrapper = setup();
-  const incrementButton = $find(wrapper, `[data-test="increment-button"]`);
-  const decrementButton = $find(wrapper, `[data-test="decrement-button"]`);
-  const display = $find(wrapper, 'h1');
 
   test('renders App component', () => {
+    const wrapper = setup();
     const appComponent = $find(wrapper, `[data-test="App"]`);
     expect(appComponent.exists()).toBe(true);
   });
 
   it('renders increment button', () => {  
+    const wrapper = setup();
+    const incrementButton = $find(wrapper, `[data-test="increment-button"]`);
     expect(incrementButton.exists()).toBe(true);
   });
 
+  it('renders a decrement button', () => {
+    const wrapper = setup();
+    const decrementButton = $find(wrapper, `[data-test="decrement-button"]`);
+    expect(decrementButton.exists()).toBe(true);
+  });
+
   it('renders Counter display', () => {  
+    const wrapper = setup();
+    const display = $find(wrapper, 'h1');
     expect(display.exists()).toBe(true);
   });
 
   it('Counter starts at 0', () => {
-    const counter = $find(wrapper, 'span');
+    const wrapper = setup();
+    const counter = $find(wrapper, `[data-test='counter-span']`);
     expect(parseInt(counter.text())).toBe(0);
-  });
-
-  it('clicking button increments Counter Display', () => {
-    incrementButton.simulate('click');
-    const counter = $find(wrapper, 'span');
-    expect(parseInt(counter.text())).toBe(1);
-  });
-
-  //Counter Challenges Section
-  //Implement a Decrement Button
-
-  it('renders a decrement button', () => {
-    expect(decrementButton.exists()).toBe(true);
   });
 
   //Prevent Count from going negative and display error 
   it('Count will not decrement below 0', () => {
-    const startingCount = +($find(wrapper, 'span').text());
-    console.log("starting count: ", startingCount);
+    const wrapper = setup();
+    const decrementButton = $find(wrapper, `[data-test="decrement-button"]`);
     decrementButton.simulate('click');
-    const counter = $find(wrapper, 'span');
+    const counter = $find(wrapper, `[data-test='counter-span']`);
     expect(parseInt(counter.text())).toBe(0);
   });
 
   it('Displays error on if decrement button is clicked while count is 0', () => {
+    const wrapper = setup();
+    const decrementButton = $find(wrapper, `[data-test="decrement-button"]`);
     decrementButton.simulate('click');
     const errorMessage = $find(wrapper, `[data-test="error-span"]`);
-    expect(errorMessage.exists()).toBe(false);
+    expect(errorMessage.exists()).toBe(true);
   });
 
   //Clear Error on Increment
   it('Clears error on Increment', () => {
+    const wrapper = setup();
+    const incrementButton = $find(wrapper, `[data-test="increment-button"]`);
+    const decrementButton = $find(wrapper, `[data-test="decrement-button"]`);
     //Generate Error
     decrementButton.simulate('click');
     //Optionally verify error message present
@@ -69,5 +69,13 @@ describe("The <App /> Component renders and behaves as expected", () => {
     const postIncrementErrorMessage = $find(wrapper, `[data-test="error-span"]`);
     expect(postIncrementErrorMessage.exists()).toBe(false);
   });
+
+  it('clicking button increments Counter Display', () => {
+    const wrapper = setup();
+    const incrementButton = $find(wrapper, `[data-test="increment-button"]`);
+    incrementButton.simulate('click');
+    const counter = $find(wrapper, `[data-test='counter-span']`);
+    expect(parseInt(counter.text())).toBe(1);
+  }); 
 
 });
