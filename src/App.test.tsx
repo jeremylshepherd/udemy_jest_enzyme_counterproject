@@ -6,15 +6,15 @@ import App from './App';
 Enzyme.configure({ adapter: new EnzymeAdapter() });
 
 const setup = () => shallow(<App />);
-const _$ = (wrapper, query: string) => wrapper.find(query);
+const $find = (wrapper : Enzyme.ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>>, query : string) : Enzyme.ShallowWrapper<any, Readonly<{}>, React.Component<{}, {}, any>> => wrapper.find(query);
 
 describe("The <App /> Component renders and behaves as expected", () => {
   const wrapper = setup();
-  const button = _$(wrapper, `[data-test="button"]`);
-  const display = _$(wrapper, 'h1');
+  const button = $find(wrapper, `[data-test="button"]`);
+  const display = $find(wrapper, 'h1');
 
   test('renders App component', () => {
-    const appComponent = _$(wrapper, `[data-test="App"]`);
+    const appComponent = $find(wrapper, `[data-test="App"]`);
     expect(appComponent.exists()).toBe(true);
   });
 
@@ -27,13 +27,13 @@ describe("The <App /> Component renders and behaves as expected", () => {
   });
 
   it('Counter starts at 0', () => {
-    const counter = _$(wrapper, 'span');
+    const counter = $find(wrapper, 'span');
     expect(parseInt(counter.text())).toBe(0);
   });
 
   it('clicking button increments Counter Display', () => {
     button.simulate('click');
-    const counter = _$(wrapper, 'span');
+    const counter = $find(wrapper, 'span');
     expect(parseInt(counter.text())).toBe(1);
   });
 
