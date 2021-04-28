@@ -62,12 +62,21 @@ describe("The <App /> Component renders and behaves as expected", () => {
     const wrapper = setup();
     const incrementButton = $find(wrapper, `[data-test="increment-button"]`);
     const decrementButton = $find(wrapper, `[data-test="decrement-button"]`);
+    
     //Generate Error
     decrementButton.simulate('click');
-    //Optionally verify error message present
+
+    //Verify Error Message is Visible
+    const errorMessageVisible : boolean = $find(wrapper, `[data-test="error-span"]`).exists();
+    if(!errorMessageVisible) {
+      throw new Error('Error message not visible');
+    }
+
+    //Increment to clear error
     incrementButton.simulate('click');
-    const postIncrementErrorMessage = $find(wrapper, `[data-test="error-span"]`);
-    expect(postIncrementErrorMessage.exists()).toBe(false);
+
+    const postIncrementErrorMessageVisible = $find(wrapper, `[data-test="error-span"]`).exists();
+    expect(postIncrementErrorMessageVisible).toBe(false);
   });
 
   it('clicking button increments Counter Display', () => {

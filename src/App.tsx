@@ -13,8 +13,16 @@ function App() {
           error ? <span className="alert alert-danger" data-test="error-span">You cannot decrement count below zero!</span>:
           null
         }
-        <div className="d-flex flex-row mt-5">
-          <button className="btn btn-primary mr-2" data-test="increment-button" onClick={() => {setCount(count + 1); setError(false);}}>Increment Count</button>
+        <div className="d-flex flex-row">
+          <button 
+            className="btn btn-primary mr-2" 
+            data-test="increment-button" 
+            onClick={() => {              
+              setCount(count + 1);
+              setError(false);
+            }}>
+              Increment Count
+            </button>
           <button className="btn btn-danger" data-test="decrement-button" onClick={() => count > 0 ? setCount(count - 1) : setError(true)}>Decrement Button</button>
         </div>
       </div>
